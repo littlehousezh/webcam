@@ -1,0 +1,73 @@
+{% extends 'zkbase.html' %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stimulus.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 20px; font-weight: bold;">Q{{index}}. Given input 5, what's the final output?</h1>
+
+    <div class="question">
+        <pre style="font-family: 'Courier New', monospace; font-size: 17px;">
+        long long operate(int n) {
+            switch (n) {
+                case 0:
+                    return 0;
+                case 1:
+                    return 1;
+                default:
+                    long long mystery1 = 0;
+                    long long mystery2 = 1;
+                    for (int i = 2; i <= n; ++i) {
+                        long long mystery3 = mystery1 + mystery2;
+                        mystery1 = mystery2;
+                        mystery2 = mystery3;
+                    }
+                    return mystery2;
+            }
+        }                           
+        </pre>
+    </div>
+        <form action="{{ url_for('stimulus', index=index) }}" method="POST">
+            <label for="choice1">
+                <input type="radio" id="choice1" name="choice" value="1">
+                5
+            </label>
+            <br>
+            <label for="choice2">
+                <input type="radio" id="choice2" name="choice" value="2">
+                6
+            </label>
+            <br>
+            <label for="choice3">
+                <input type="radio" id="choice3" name="choice" value="3">
+                8
+            </label>
+            <br>
+            <label for="choice4">
+                <input type="radio" id="choice4" name="choice" value="4">
+                3
+            </label>
+            <br>
+
+            <input type="submit" value="Next" onclick="return validateForm()">
+        </form>
+
+
+        <script>
+            function validateForm() {
+                var options = document.getElementsByName("choice");
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].checked) {
+                        return true; // Proceed to the next stimulus page
+                    }
+                }
+                alert("Please select an answer.");
+               return false; // Prevent form submission
+            }
+        </script>
+
+    </div>
+{% endblock %}
+

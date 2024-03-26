@@ -1,0 +1,72 @@
+{% extends 'zkbase.html' %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stimulus.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 style="font-family: 'Times New Roman', Times, serif; font-size: 20px; font-weight: bold;">Q{{index}}. What is returned by the following function given the input <span style="font-family: 'Courier New', monospace; font-weight: bold;">(afunc 2003 3 6 2005 12 30)</span>?</h1>
+
+    <div class="question">
+        <pre style="font-family: 'Courier New', monospace; font-size: 17px;">
+        #include &lt;iostream&gt;
+        bool afunc(int year1, int month1, int day1, int year2, int month2, int day2) {
+            if (year1 < year2) {
+                return true;
+            } else if (year1 > year2) {
+                return false;
+            } else {
+                if (month1 < month2) {
+                    return true;
+                } else if (month1 > month2) {
+                    return false;
+                } else {
+                    return day1 > day2;
+                } }
+        }                             
+        </pre>
+    </div>
+
+        <form action="{{ url_for('stimulus', index=index) }}" method="POST">
+            <label for="choice1">
+                <input type="radio" id="choice1" name="choice" value="1">
+                True
+            </label>
+            <br>
+            <label for="choice2">
+                <input type="radio" id="choice2" name="choice" value="2">
+                False
+            </label>
+            <br>
+            <label for="choice3">
+                <input type="radio" id="choice3" name="choice" value="3">
+                Error
+            </label>
+            <br>
+            <label for="choice4">
+                <input type="radio" id="choice4" name="choice" value="4">
+                None
+            </label>
+            <br>
+
+            <input type="submit" value="Next" onclick="return validateForm()">
+        </form>
+
+
+        <script>
+            function validateForm() {
+                var options = document.getElementsByName("choice");
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].checked) {
+                        return true; // Proceed to the next stimulus page
+                    }
+                }
+                alert("Please select an answer.");
+               return false; // Prevent form submission
+            }
+        </script>
+
+    </div>
+{% endblock %}
+

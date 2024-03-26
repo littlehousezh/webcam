@@ -1,0 +1,82 @@
+{% extends 'zkbase.html' %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stimulus.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class='parent'>
+            <div class='child'>
+                <h2 style="font-family:'Times New Roman', Times, serif; font-size: 20px; font-weight: bold;">Q{{index}}. Consider the following function:</h2>
+                <pre style="font-family: 'Courier New', monospace; font-size: 16px;">
+#include &lt;iostream&gt;
+#include &lt;std::string&gt;
+std::string manipulateString(const std::string& str) {
+  std::string manipulatedStr = "";
+  for (int i = 0; i < str.length(); i++) {
+     if (i % 2 == 0) {
+       manipulatedStr += toupper(str[i]);
+     }  else {
+       manipulatedStr += tolower(str[i]);
+     } }
+  return manipulatedStr;
+}
+                </pre>
+            </div>
+
+            <div class='child'>
+                <h2 style="font-family:'Times New Roman', Times, serif; font-size: 20px; font-weight: bold;">What is the output of the following?</h2>
+
+                <pre style="font-family: 'Courier New', monospace; font-size: 16px;">
+int main() {
+  std::string input = "DuckDuckGoose";
+  std::string manipulated = manipulateString(input);
+  std::cout << "Manipulated string: " << manipulated << std::endl;
+  return 0;
+}
+                </pre>
+            </div>
+
+        </div>
+
+        <form action="{{ url_for('stimulus', index=index) }}" method="post">
+            <label for="choice1">
+                <input type="radio" id="choice1" name="choice" value="1">
+                Manipulated string: dUcKdUcKgOoSe
+            </label>
+            <br>
+            <label for="choice2">
+                <input type="radio" id="choice2" name="choice" value="2">
+                Manipulated string: dUCkDUcKGoOSe
+            </label>
+            <br>
+            <label for="choice3">
+                <input type="radio" id="choice3" name="choice" value="3">
+                Manipulated string: DUCKDUCKGOOSE
+            </label>
+            <br>
+            <label for="choice4">
+                <input type="radio" id="choice4" name="choice" value="4">
+                Manipulated string: dUCKdUCKgOOSE
+            </label>
+            <br>
+
+            <input type="submit" value="Next" onclick="return validateForm()">
+        </form>
+
+        <script>
+            function validateForm() {
+                var options = document.getElementsByName("choice");
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].checked) {
+                        return true; // Proceed to the next stimulus page
+                    }
+                }
+                alert("Please select an answer.");
+               return false; // Prevent form submission
+            }
+        </script>
+
+    </div>
+{% endblock %}
